@@ -1,11 +1,12 @@
-public class Task {
-
+public class Deadline {
     protected String description;
     protected boolean isDone;
+    protected String deadline;
 
-    public Task(String description) {
+    public Deadline(String description, String deadline) {
         this.description = description;
         this.isDone = false;
+        this.deadline = deadline;
 
     }
 
@@ -22,11 +23,11 @@ public class Task {
     }
 
     public String getDescription() {
-        return description;
+        return this.description + "(by: " + this.deadline + ")";
     }
 
     @Override
     public String toString() {
-        return "[T][" + getStatusIcon() + "] " + getDescription();
+        return "[D][" + getStatusIcon() + "] " + getDescription();
     }
 }

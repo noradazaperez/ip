@@ -1,11 +1,14 @@
-public class Task {
-
+public class Event {
     protected String description;
     protected boolean isDone;
+    protected String from;
+    protected String to;
 
-    public Task(String description) {
+    public Event(String description, String from, String to) {
         this.description = description;
         this.isDone = false;
+        this.from = from;
+        this.to = to;
 
     }
 
@@ -22,11 +25,11 @@ public class Task {
     }
 
     public String getDescription() {
-        return description;
+        return description + "(from: " + from + " to: " + to + ")";
     }
 
     @Override
     public String toString() {
-        return "[T][" + getStatusIcon() + "] " + getDescription();
+        return "[E][" + getStatusIcon() + "] " + getDescription();
     }
 }
