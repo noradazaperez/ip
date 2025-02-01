@@ -3,12 +3,7 @@ import java.util.Scanner;
 public class Mimi {
     static String bar = "--------------------------------------------------";
     static Task [] tasks = new Task[100];
-    static Deadline [] deadlines = new Deadline[100];
-    static Event [] events = new Event[100];
-
     static int taskIndex = 0;
-    static int deadlineIndex = 0;
-    static int eventIndex = 0;
 
     public static void main(String[] args) {
         String userinput;
@@ -82,24 +77,25 @@ public class Mimi {
     }
 
 
+
     public static void addToDo(String taskDescription) {
         Task task = new Task(taskDescription);
         tasks[taskIndex] = task;
         taskIndex++;
 
         System.out.println("That's great! I've added: \n" + task);
-        System.out.println("Now you have " + (deadlineIndex + taskIndex + eventIndex) + " tasks");
+        System.out.println("Now you have " + taskIndex + " tasks");
     }
 
     public static void addDeadline(String taskDescription) {
         int index = taskDescription.indexOf("/by");
         Deadline deadline = new Deadline(taskDescription.substring(0, index),
                 taskDescription.substring(index + 4));
-        deadlines[deadlineIndex] = deadline;
-        deadlineIndex++;
+        tasks[taskIndex] = deadline;
+        taskIndex++;
 
         System.out.println("That's great! I've added:\n " + deadline);
-        System.out.println("Now you have " + (deadlineIndex + taskIndex + eventIndex) + " tasks");
+        System.out.println("Now you have " + taskIndex + " tasks");
     }
 
     public static void addEvent(String taskDescription) {
@@ -109,22 +105,17 @@ public class Mimi {
         Event event = new Event(taskDescription.substring(0, indexFrom),
                 taskDescription.substring(indexFrom + 6, indexTo),
                 taskDescription.substring(indexTo + 4));
-        events[eventIndex] = event;
-        eventIndex++;
+        tasks[taskIndex] = event;
+        taskIndex++;
 
         System.out.println("That's great! I've added:\n " + event);
-        System.out.println("Now you have " + (deadlineIndex + taskIndex + eventIndex) + " tasks");
+        System.out.println("Now you have " + taskIndex + " tasks");
     }
 
     public static void showList() {
         for (int i = 0; i < taskIndex; i++) {
             System.out.println((i+1) + ". " + tasks[i].toString());
         }
-        for (int j = 0; j < deadlineIndex; j++) {
-            System.out.println((j+1+taskIndex) + ". " + deadlines[j].toString());
-        }
-        for(int k = 0; k < eventIndex; k++) {
-            System.out.println((k+1+taskIndex+deadlineIndex) + ". " + events[k].toString());
-        }
+
     }
 }

@@ -1,29 +1,16 @@
-public class Event {
-    protected String description;
-    protected boolean isDone;
+public class Event extends Task{
+
     protected String from;
     protected String to;
 
     public Event(String description, String from, String to) {
-        this.description = description;
-        this.isDone = false;
+        super(description);
         this.from = from;
         this.to = to;
 
     }
 
-    public String getStatusIcon() {
-        return (isDone? "X":" ");
-    }
-
-    public void markAsDone() {
-        isDone = true;
-    }
-
-    public void markAsNotDone() {
-        isDone = false;
-    }
-
+    @Override
     public String getDescription() {
         return description + "(from: " + from + " to: " + to + ")";
     }

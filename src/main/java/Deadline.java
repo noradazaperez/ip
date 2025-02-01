@@ -1,27 +1,13 @@
-public class Deadline {
-    protected String description;
-    protected boolean isDone;
+public class Deadline extends Task{
     protected String deadline;
 
     public Deadline(String description, String deadline) {
-        this.description = description;
-        this.isDone = false;
+        super(description);
         this.deadline = deadline;
 
     }
 
-    public String getStatusIcon() {
-        return (isDone? "X":" ");
-    }
-
-    public void markAsDone() {
-        isDone = true;
-    }
-
-    public void markAsNotDone() {
-        isDone = false;
-    }
-
+    @Override
     public String getDescription() {
         return this.description + "(by: " + this.deadline + ")";
     }
