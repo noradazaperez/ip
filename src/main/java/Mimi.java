@@ -6,60 +6,114 @@ public class Mimi {
     static int taskIndex = 0;
 
     public static void main(String[] args) {
-        String userinput;
+
         greet();
         Scanner sc = new Scanner(System.in);
-        do {
+        String userinput;
+
+
+        while (true) {
+            System.out.print("> ");
             userinput = sc.nextLine();
             System.out.println(bar);
-            String [] input = userinput.split(" ",2);
 
-            // depending on the task, execute a different function
-            switch (input[0]) {
-                case "list":
-                    showList();
-                    break;
-                case "mark":
-                    mark(Integer.parseInt(input[1]));
-                    break;
-                case "unmark":
-                    unmark(Integer.parseInt(input[1]));
-                    break;
-                case "todo":
-                    addToDo(input[1]);
-                    break;
-                case "deadline":
-                    addDeadline(input[1]);
-                    break;
-                case "event":
-                    addEvent(input[1]);
-                    break;
-                default:
-                    break;
+            // exit if the user types something like 'quit' or 'exit
+            if (userinput.equalsIgnoreCase("exit")) {
+                System.out.println("Mimi says adios to you...");
+                break;
             }
 
-            System.out.println(bar);
+            try {
+                // process the user input
+                processInput(userinput);
+            } catch (MimiException me) {
+                // handle invalid input
+                System.out.println(me.toString());
+            }
+        }
 
-        } while (!userinput.equals("bye"));
-        System.out.println("Bye. Hope to see you again soon.\n" + bar);
+        sc.close();
 
     }
 
-    public static void mark(int index){
+    /**
+     * Splits the user input and decides what to do
+     * @param userinput the raw command line from the user
+     * @throws MimiException if input format is incorrect
+     */
+    public static void processInput(String userinput) throws MimiException {
+        // Split into at most 2 parts: [0] = command, [1] = rest
+        String[] parts = userinput.split(" ", 2);
+
+        // parts[0] is the command; it must exist
+        if (parts.length == 0 || parts[0].isEmpty()) {
+            throw new MimiException("No command was entered.");
+        }
+
+
+        String command = parts[0].toLowerCase();
+        String description = parts.length > 1? parts[1].trim(): "";
+
+        switch (command) {
+            case "list":
+                showList();
+                break;
+            case "mark":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                mark(Integer.parseInt(description));
+                break;
+            case "unmark":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                unmark(Integer.parseInt(description));
+                break;
+            case "todo":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                addToDo(description);
+                break;
+            case "deadline":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                addDeadline(description);
+                break;
+            case "event":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                addEvent(description);
+                break;
+            default:
+                throw new MimiException("Perdona?? I think I don't know the command: " + command);
+        }
+
+    }
+
+    public static void mark(int index) throws MimiException {
 
         // error handling
-        if (index - 1 > taskIndex) {
-            System.out.println("Sorry! The task doesn't exist.");
+        if (index > taskIndex) {
+            throw new MimiException("Sorry! The task doesn't exist.");
         }
         tasks[index - 1].markAsDone();
         System.out.println("Nice! I've marked this task as done: ");
         System.out.println(tasks[index - 1]);
     }
 
-    public static void unmark(int index){
+    public static void unmark(int index) throws MimiException {
         // error handling
-        if (index - 1 > taskIndex) {
-            System.out.println("Sorry! The task doesn't exist.");
+        if (index > taskIndex) {
+            throw new MimiException("Sorry! The task doesn't exist.");
         }
         tasks[index - 1].markAsNotDone();
 
@@ -77,7 +131,7 @@ public class Mimi {
                  M   M  III  M   M  III\s
                 """;
         System.out.println(bar + "\nHello from\n" + logo + bar);
-        System.out.println("Hello! I'm Mimi");
+        System.out.println("Hola!! I'm Mimi. I'm still learning English... Sorry if I make mistakes");
         System.out.println("What can I do for you?\n" + bar);
 
     }
