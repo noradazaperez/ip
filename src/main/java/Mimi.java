@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Mimi {
-    static String bar = "--------------------------------------------------";
+    static final String bar = "--------------------------------------------------";
     static Task [] tasks = new Task[100];
     static int taskIndex = 0;
 
@@ -14,6 +14,7 @@ public class Mimi {
             System.out.println(bar);
             String [] input = userinput.split(" ",2);
 
+            // depending on the task, execute a different function
             switch (input[0]) {
                 case "list":
                     showList();
@@ -45,6 +46,8 @@ public class Mimi {
     }
 
     public static void mark(int index){
+
+        // error handling
         if (index - 1 > taskIndex) {
             System.out.println("Sorry! The task doesn't exist.");
         }
@@ -54,10 +57,13 @@ public class Mimi {
     }
 
     public static void unmark(int index){
+        // error handling
         if (index - 1 > taskIndex) {
             System.out.println("Sorry! The task doesn't exist.");
         }
         tasks[index - 1].markAsNotDone();
+
+        // output message
         System.out.println("OK, I've marked this task as not done yet: ");
         System.out.println(tasks[index - 1]);
     }
@@ -83,6 +89,7 @@ public class Mimi {
         tasks[taskIndex] = task;
         taskIndex++;
 
+        // output message
         System.out.println("That's great! I've added: \n" + task);
         System.out.println("Now you have " + taskIndex + " tasks");
     }
@@ -94,6 +101,7 @@ public class Mimi {
         tasks[taskIndex] = deadline;
         taskIndex++;
 
+        // output message
         System.out.println("That's great! I've added:\n " + deadline);
         System.out.println("Now you have " + taskIndex + " tasks");
     }
@@ -108,6 +116,7 @@ public class Mimi {
         tasks[taskIndex] = event;
         taskIndex++;
 
+        // output message
         System.out.println("That's great! I've added:\n " + event);
         System.out.println("Now you have " + taskIndex + " tasks");
     }
