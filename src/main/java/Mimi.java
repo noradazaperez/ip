@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Collection;
 
 public class Mimi {
     static final String bar = "--------------------------------------------------";
-    static Task [] tasks = new Task[100];
-    static int taskIndex = 0;
+    static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -93,33 +94,69 @@ public class Mimi {
                 }
                 addEvent(description);
                 break;
+            case "delete":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                delete(Integer.parseInt(description));
+                break;
             default:
                 throw new MimiException("Perdona?? I think I don't know the command: " + command);
         }
 
     }
 
+    /**
+     * Deletes a task
+     * @param index index of the task that we want to delete
+     * @throws MimiException if the task doesn't exist
+     */
+    public static void delete(int index) throws MimiException {
+
+        if (index > tasks.size()) {
+            throw new MimiException("Sorry! The task doesn't exist. Index out of bounds: " + index);
+        }
+        Task task = tasks.remove(index-1);
+        System.out.println("Ay no! You don't want to do the task anymore? I have removed the next task:");
+        System.out.println(task);
+
+        // Only prints if there are tasks
+        if (!tasks.isEmpty())
+        {
+            System.out.println("Now you have the following tasks:");
+            showList();
+        }
+
+
+    }
+
+    /**
+     * Marks a task as done
+     * @param index     index number of the task
+     * @throws MimiException    if the task does not exist
+     */
     public static void mark(int index) throws MimiException {
 
         // error handling
-        if (index > taskIndex) {
+        if (index > tasks.size()) {
             throw new MimiException("Sorry! The task doesn't exist.");
         }
-        tasks[index - 1].markAsDone();
+        tasks.get(index - 1).markAsDone();
         System.out.println("Nice! I've marked this task as done: ");
-        System.out.println(tasks[index - 1]);
+        System.out.println(tasks.get(index - 1));
     }
 
     public static void unmark(int index) throws MimiException {
         // error handling
-        if (index > taskIndex) {
+        if (index > tasks.size()) {
             throw new MimiException("Sorry! The task doesn't exist.");
         }
-        tasks[index - 1].markAsNotDone();
+        tasks.get(index - 1).markAsNotDone();
 
         // output message
         System.out.println("OK, I've marked this task as not done yet: ");
-        System.out.println(tasks[index - 1]);
+        System.out.println(tasks.get(index - 1));
     }
 
     public static void greet() {
@@ -140,24 +177,22 @@ public class Mimi {
 
     public static void addToDo(String taskDescription) {
         Task task = new Task(taskDescription);
-        tasks[taskIndex] = task;
-        taskIndex++;
+        tasks.add(task);
+
 
         // output message
         System.out.println("That's great! I've added: \n" + task);
-        System.out.println("Now you have " + taskIndex + " tasks");
+        System.out.println("Now you have " + tasks.size() + " tasks");
     }
 
     public static void addDeadline(String taskDescription) {
         int index = taskDescription.indexOf("/by");
         Deadline deadline = new Deadline(taskDescription.substring(0, index),
                 taskDescription.substring(index + 4));
-        tasks[taskIndex] = deadline;
-        taskIndex++;
-
+        tasks.add(deadline);
         // output message
         System.out.println("That's great! I've added:\n " + deadline);
-        System.out.println("Now you have " + taskIndex + " tasks");
+        System.out.println("Now you have " + tasks.size() + " tasks");
     }
 
     public static void addEvent(String taskDescription) {
@@ -167,17 +202,16 @@ public class Mimi {
         Event event = new Event(taskDescription.substring(0, indexFrom),
                 taskDescription.substring(indexFrom + 6, indexTo),
                 taskDescription.substring(indexTo + 4));
-        tasks[taskIndex] = event;
-        taskIndex++;
+        tasks.add(event);
 
         // output message
         System.out.println("That's great! I've added:\n " + event);
-        System.out.println("Now you have " + taskIndex + " tasks");
+        System.out.println("Now you have " + tasks.size() + " tasks");
     }
 
     public static void showList() {
-        for (int i = 0; i < taskIndex; i++) {
-            System.out.println((i+1) + ". " + tasks[i].toString());
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i+1) + ". " + tasks.get(i).toString());
         }
 
     }
