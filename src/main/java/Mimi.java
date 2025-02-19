@@ -85,7 +85,7 @@ public class Mimi {
                     if (parts.length < 5) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
-                    task = new Event(description, done, parts[4].trim(), parts[5].trim());
+                    task = new Event(description, done, parts[3].trim(), parts[4].trim());
                 }
                 else {
                     // ERROR
