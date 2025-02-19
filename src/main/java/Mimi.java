@@ -117,10 +117,17 @@ public class Mimi {
         if (index > tasks.size()) {
             throw new MimiException("Sorry! The task doesn't exist. Index out of bounds: " + index);
         }
-        tasks.remove(index-1);
-        System.out.println("Ay no! You don't want to do the task anymore?");
-        System.out.println("Now you have the following tasks:");
-        showList();
+        Task task = tasks.remove(index-1);
+        System.out.println("Ay no! You don't want to do the task anymore? I have removed the next task:");
+        System.out.println(task);
+
+        // Only prints if there are tasks
+        if (!tasks.isEmpty())
+        {
+            System.out.println("Now you have the following tasks:");
+            showList();
+        }
+
 
     }
 
