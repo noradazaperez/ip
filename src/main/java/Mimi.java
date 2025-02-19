@@ -6,6 +6,7 @@ import java.util.Collection;
 public class Mimi {
     static final String bar = "--------------------------------------------------";
     static ArrayList<Task> tasks = new ArrayList<>();
+    static String fileName = "data/out.txt";
 
     public static void main(String[] args) {
 
@@ -15,7 +16,7 @@ public class Mimi {
         try {
             loadTasks(new File(fileName));
         } catch (MimiException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         while (true) {
@@ -61,7 +62,7 @@ public class Mimi {
                 }
 
                 // Convert "Y"/"N" to boolean
-                boolean done = parts[0].equalsIgnoreCase("Y");
+                boolean done = parts[0].trim().equalsIgnoreCase("Y");
 
                 // The third field is always the description
                 String description = parts[2].trim();
@@ -70,28 +71,28 @@ public class Mimi {
                 // The second field is the type (T/D/E)
                 String type = parts[1].trim();
                 if (type.equalsIgnoreCase("T")) {
-                    task = new Task(description);
+                    task = new Task(description, done);
                 }
                 else if (type.equalsIgnoreCase("D")) {
                     // Validation
                     if (parts.length < 4) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
-                    task = new Deadline(description, parts[3].trim());
+                    task = new Deadline(description, done, parts[3].trim());
                 }
                 else if (type.equalsIgnoreCase("E")) {
                     // Validation
                     if (parts.length < 5) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
-                    task = new Event(description, parts[4].trim(), parts[5].trim());
+                    task = new Event(description, done, parts[4].trim(), parts[5].trim());
                 }
                 else {
                     // ERROR
                     throw new MimiException("Oh no... There is a PROBLEMA with the file");
                 }
 
-                tasks[taskIndex++] = task;
+                tasks.add(task);
 
             }
         } catch (IOException e) {
@@ -103,8 +104,9 @@ public class Mimi {
 
     private static void saveTasks(File file) throws MimiException {
         try (FileWriter writer = new FileWriter(file)) {
-            for (int i = 0; i < taskIndex; i++) {
-                writer.write(tasks[i].printFile() + "\n");
+
+            for (Task task: tasks) {
+                writer.write(task.printFile() + "\n");
             }
         } catch (IOException e) {
             throw new MimiException("Ay noo, the file " + file.getAbsolutePath() + " could not be saved.");

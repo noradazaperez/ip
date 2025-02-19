@@ -1,10 +1,13 @@
 public class Deadline extends Task{
     protected String deadline;
 
-    public Deadline(String description, String deadline) {
-        super(description);
+    public Deadline(String description, boolean isDone, String deadline) {
+        super(description, isDone);
         this.deadline = deadline;
 
+    }
+    public Deadline(String description, String deadline){
+        this(description, false, deadline);
     }
 
     @Override

@@ -1,1 +1,4 @@
+Y|T|hola
 N|T|hola
+N|T|adios
+Y|D|hola|tuesday
