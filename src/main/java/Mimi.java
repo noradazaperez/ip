@@ -95,10 +95,32 @@ public class Mimi {
                 addEvent(description);
                 break;
             case "delete":
+                // parts[1] must exist, the description
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                delete(Integer.parseInt(description));
                 break;
             default:
                 throw new MimiException("Perdona?? I think I don't know the command: " + command);
         }
+
+    }
+
+    /**
+     * Deletes a task
+     * @param index index of the task that we want to delete
+     * @throws MimiException if the task doesn't exist
+     */
+    public static void delete(int index) throws MimiException {
+
+        if (index > tasks.size()) {
+            throw new MimiException("Sorry! The task doesn't exist. Index out of bounds: " + index);
+        }
+        tasks.remove(index-1);
+        System.out.println("Ay no! You don't want to do the task anymore?");
+        System.out.println("Now you have the following tasks:");
+        showList();
 
     }
 
