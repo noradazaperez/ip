@@ -11,6 +11,12 @@ public class Event extends Task{
     }
 
     @Override
+    public String printFile(){
+        String done = isDone? "Y":"N";
+        return done + "|E|" + description + "|" + from + "|" + to;
+    }
+
+    @Override
     public String getDescription() {
         return description + "(from: " + from + " to: " + to + ")";
     }
