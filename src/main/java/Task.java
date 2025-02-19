@@ -25,6 +25,11 @@ public class Task {
         return description;
     }
 
+    public String printFile(){
+        String done = isDone ? "Y":"N";
+        return done + "|T|" + getDescription();
+    }
+
     @Override
     public String toString() {
         return "[T][" + getStatusIcon() + "] " + getDescription();

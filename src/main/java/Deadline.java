@@ -8,6 +8,11 @@ public class Deadline extends Task{
     }
 
     @Override
+    public String printFile() {
+        String done = isDone?"Y":"N";
+        return done + "|D|" + description + "|" + deadline;
+    }
+    @Override
     public String getDescription() {
         return this.description + "(by: " + this.deadline + ")";
     }
