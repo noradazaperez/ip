@@ -1,13 +1,12 @@
-public class DeleteCommand implements Command {
+public class FindCommand implements Command {
 
-    private int task;
-
-    public DeleteCommand(int task) {
-        this.task = task;
+    private String keyword;
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
     }
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
-        tasks.delete(task);
+        ui.showTasks(tasks.find(keyword));
     }
 
     @Override
@@ -17,8 +16,6 @@ public class DeleteCommand implements Command {
 
     @Override
     public String getCommand() {
-        return "We have just deleted task " + task;
+        return "";
     }
-
-
 }

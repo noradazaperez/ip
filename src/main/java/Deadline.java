@@ -2,6 +2,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a task with a deadline.
+ * <p>
+ * This class extends {@code Task} by adding a deadline, which is stored as a {@code String}.
+ * The deadline typically indicates the due date for the task.
+ * </p>
+ */
 public class Deadline extends Task {
     protected LocalDate deadline;
 
@@ -21,6 +28,15 @@ public class Deadline extends Task {
         this(description, false, deadlineStr);
     }
 
+    /**
+     * Returns a string representation of this task suitable for file storage.
+     * <p>
+     * The format is: [done status]|D|[description]|[deadline]
+     * where {@code Y} indicates that the task is completed, and {@code N} otherwise.
+     * </p>
+     *
+     * @return a formatted string for file storage
+     */
     @Override
     public String printFile() {
         String done = isDone ? "Y" : "N";
