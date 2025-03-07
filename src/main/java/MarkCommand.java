@@ -1,5 +1,6 @@
 public class MarkCommand implements Command {
-    private int task;
+    private final int task;
+
     public MarkCommand(int task) {
         this.task = task;
     }

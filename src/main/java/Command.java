@@ -1,5 +1,7 @@
-public abstract interface Command {
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException;
-    public boolean isExit();
-    public String getCommand();
+public interface Command {
+    void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException;
+
+    boolean isExit();
+
+    String getCommand();
 }

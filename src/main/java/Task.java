@@ -13,7 +13,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone? "X":" ");
+        return (isDone ? "X" : " ");
     }
 
     public void markAsDone() {
@@ -28,8 +28,8 @@ public class Task {
         return description;
     }
 
-    public String printFile(){
-        String done = isDone ? "Y":"N";
+    public String printFile() {
+        String done = isDone ? "Y" : "N";
         return done + "|T|" + getDescription();
     }
 

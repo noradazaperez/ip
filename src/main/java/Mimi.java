@@ -3,9 +3,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Mimi {
-    private Storage storage;
+    private final Storage storage;
     private TaskList taskList;
-    private Ui ui;
+    private final Ui ui;
 
     public Mimi(String filePath) {
         ui = new Ui();
@@ -13,6 +13,7 @@ public class Mimi {
         try {
             taskList = new TaskList(storage.load());
         } catch (MimiException e) {
+            ui.showError(e.toString());
             taskList = new TaskList();
         }
     }
@@ -21,7 +22,7 @@ public class Mimi {
         ui.greet();
         boolean isExit = false;
         while (!isExit) {
-            try{
+            try {
                 String fullCommand = ui.readCommand();
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
@@ -40,7 +41,6 @@ public class Mimi {
     public static void main(String[] args) {
         new Mimi("data/out.txt").run();
     }
-
 
 
 }

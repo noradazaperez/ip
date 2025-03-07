@@ -6,23 +6,25 @@ import java.util.Scanner;
 
 public class Storage {
     private File file;
+
     public Storage(String filePath) {
         this.file = new File(filePath);
     }
 
     /**
      * It loads the information of the given file and returns a list of tasks
-     * @return                  the list of tasks
-     * @throws MimiException    if the specified file does not exist
+     *
+     * @return the list of tasks
+     * @throws MimiException if the specified file does not exist
      */
     public ArrayList<Task> load() throws MimiException {
         ArrayList<Task> tasks = new ArrayList<>();
-        try (Scanner sc = new Scanner(file)){
+        try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 // Skip empty or whitespace-only lines if needed
-                if (line.isEmpty()){
+                if (line.isEmpty()) {
                     continue;
                 }
 
@@ -45,22 +47,19 @@ public class Storage {
                 String type = parts[1].trim();
                 if (type.equalsIgnoreCase("T")) {
                     task = new Task(description, done);
-                }
-                else if (type.equalsIgnoreCase("D")) {
+                } else if (type.equalsIgnoreCase("D")) {
                     // Validation
                     if (parts.length < 4) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
                     task = new Deadline(description, done, parts[3].trim());
-                }
-                else if (type.equalsIgnoreCase("E")) {
+                } else if (type.equalsIgnoreCase("E")) {
                     // Validation
                     if (parts.length < 5) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
                     task = new Event(description, done, parts[3].trim(), parts[4].trim());
-                }
-                else {
+                } else {
                     // ERROR
                     throw new MimiException("Oh no... There is a PROBLEMA with the file");
                 }
@@ -77,12 +76,13 @@ public class Storage {
 
     /**
      * It saves the information in the list of tasks to the specified file
-     * @param tasks             array of tasks to be saved
-     * @throws MimiException    if the file does not exist
+     *
+     * @param tasks array of tasks to be saved
+     * @throws MimiException if the file does not exist
      */
     public void save(ArrayList<Task> tasks) throws MimiException {
         try (FileWriter writer = new FileWriter(file)) {
-            for (Task task: tasks) {
+            for (Task task : tasks) {
                 writer.write(task.printFile() + "\n");
             }
         } catch (IOException e) {

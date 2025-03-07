@@ -1,9 +1,10 @@
 public class DeleteCommand implements Command {
-    private int task;
+    private final int task;
 
     public DeleteCommand(int task) {
         this.task = task;
     }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
         tasks.delete(task);

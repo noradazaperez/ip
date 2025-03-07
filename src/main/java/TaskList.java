@@ -20,7 +20,7 @@ public class TaskList {
         if (task > tasks.size()) {
             throw new MimiException("Sorry! The task doesn't exist. Index out of bounds: " + task);
         }
-        return tasks.remove(task-1);
+        return tasks.remove(task - 1);
 
     }
 
@@ -41,8 +41,6 @@ public class TaskList {
         }
         tasks.get(task).markAsNotDone();
     }
-
-
 
 
 }

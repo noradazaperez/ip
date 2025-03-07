@@ -1,15 +1,15 @@
 import java.util.Scanner;
 
 public class Ui {
-    private String bar = "--------------------------------------------------";
+    private final String bar = "--------------------------------------------------";
 
     public void showTasks(TaskList taskList) {
         for (int i = 0; i < taskList.getTasks().size(); i++) {
-            System.out.println(i + ": " + taskList.getTasks().get(i).toString());
+            System.out.println((i + 1) + ": " + taskList.getTasks().get(i).toString());
         }
     }
 
-    public String readCommand(){
+    public String readCommand() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -39,7 +39,7 @@ public class Ui {
         //todo change something here maybe
     }
 
-    public void showCommand(Command command){
+    public void showCommand(Command command) {
         System.out.println(command.getCommand());
     }
 }

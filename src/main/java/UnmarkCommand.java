@@ -1,6 +1,7 @@
 public class UnmarkCommand implements Command {
 
-    private int task;
+    private final int task;
+
     public UnmarkCommand(int task) {
         this.task = task;
     }
