@@ -42,6 +42,16 @@ public class TaskList {
         tasks.get(task).markAsNotDone();
     }
 
+    public ArrayList<Task> find(String keyword) throws MimiException {
+        ArrayList<Task> taskKey = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                taskKey.add(task);
+            }
+        }
+        return taskKey;
+    }
+
 
 
 

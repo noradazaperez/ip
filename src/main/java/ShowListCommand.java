@@ -1,7 +1,7 @@
 public class ShowListCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showTasks(tasks);
+        ui.showTasks(tasks.getTasks());
     }
 
     @Override
