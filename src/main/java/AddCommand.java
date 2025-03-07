@@ -1,6 +1,7 @@
 public class AddCommand implements Command {
 
     Task task;
+
     public AddCommand(Task task) {
         this.task = task;
     }

@@ -40,6 +40,7 @@ public class Mimi {
         try {
             taskList = new TaskList(storage.load());
         } catch (MimiException e) {
+            ui.showError(e.toString());
             taskList = new TaskList();
         }
     }
@@ -64,7 +65,7 @@ public class Mimi {
                 ui.showLine();
                 isExit = c.isExit();
             } catch (MimiException me) {
-                // Handle invalid input by displaying an error message.
+                // handle invalid input
                 ui.showError(me.toString());
             }
         }
@@ -78,5 +79,7 @@ public class Mimi {
     public static void main(String[] args) {
         new Mimi("data/out.txt").run();
     }
-}
 
+
+
+}

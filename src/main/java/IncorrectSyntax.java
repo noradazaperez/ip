@@ -1,4 +1,4 @@
-public class IncorrectSyntax extends MimiException{
+public class IncorrectSyntax extends MimiException {
 
     public IncorrectSyntax(String message) {
         super(message);

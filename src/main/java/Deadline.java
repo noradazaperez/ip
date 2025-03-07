@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Represents a task with a deadline.
  * <p>
@@ -6,16 +10,22 @@
  * </p>
  */
 public class Deadline extends Task {
+    protected LocalDate deadline;
 
-    protected String deadline;
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
-    public Deadline(String description, boolean isDone, String deadline) {
+    public Deadline(String description, boolean isDone, String deadlineStr) throws MimiException {
         super(description, isDone);
-        this.deadline = deadline;
+        try {
+            this.deadline = LocalDate.parse(deadlineStr, INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new MimiException("Invalid date format. Please use yyyy-MM-dd.");
+        }
     }
 
-    public Deadline(String description, String deadline) {
-        this(description, false, deadline);
+    public Deadline(String description, String deadlineStr) throws MimiException {
+        this(description, false, deadlineStr);
     }
 
     /**
@@ -30,12 +40,14 @@ public class Deadline extends Task {
     @Override
     public String printFile() {
         String done = isDone ? "Y" : "N";
-        return done + "|D|" + description + "|" + deadline;
+        // Output using the input formatter so that the file retains the yyyy-MM-dd format
+        return done + "|D|" + description + "|" + deadline.format(INPUT_FORMATTER);
     }
 
     @Override
     public String getDescription() {
-        return this.description + "(by: " + this.deadline + ")";
+        // Output using the human-readable format
+        return this.description + " (by: " + deadline.format(OUTPUT_FORMATTER) + ")";
     }
 
     @Override

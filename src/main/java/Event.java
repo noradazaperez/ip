@@ -1,36 +1,13 @@
-/**
- * Represents an event task with a start and end time.
- * <p>
- * An event task is a type of {@code Task} that includes a duration, specified by a start time
- * ("from") and an end time ("to"). This class provides methods to format the event details for
- * file storage as well as for display.
- * </p>
- */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Event extends Task {
+    protected LocalDate from;
+    protected LocalDate to;
 
-    /**
-     * The start time of the event.
-     */
-    protected String from;
-
-    /**
-     * The end time of the event.
-     */
-    protected String to;
-
-    /**
-     * Constructs a new {@code Event} with the specified description, completion status, start time, and end time.
-     *
-     * @param description the description of the event
-     * @param isDone      indicates whether the event has been completed
-     * @param from        the start time of the event as a string
-     * @param to          the end time of the event as a string
-     */
-    public Event(String description, boolean isDone, String from, String to) {
-        super(description, isDone);
-        this.from = from;
-        this.to = to;
-    }
+    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
      * Constructs a new {@code Event} with the specified description, start time, and end time.
@@ -40,8 +17,18 @@ public class Event extends Task {
      * @param from        the start time of the event as a string
      * @param to          the end time of the event as a string
      */
-    public Event(String description, String from, String to) {
-        this(description, false, from, to);
+    public Event(String description, boolean isDone, String fromStr, String toStr) throws MimiException {
+        super(description, isDone);
+        try {
+            this.from = LocalDate.parse(fromStr, INPUT_FORMATTER);
+            this.to = LocalDate.parse(toStr, INPUT_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new MimiException("Invalid date format. Please use yyyy-MM-dd.");
+        }
+    }
+
+    public Event(String description, String fromStr, String toStr) throws MimiException {
+        this(description, false, fromStr, toStr);
     }
 
     /**
@@ -56,7 +43,8 @@ public class Event extends Task {
     @Override
     public String printFile() {
         String done = isDone ? "Y" : "N";
-        return done + "|E|" + description + "|" + from + "|" + to;
+        // Using the INPUT_FORMATTER to output the same format as the input.
+        return done + "|E|" + description + "|" + from.format(INPUT_FORMATTER) + "|" + to.format(INPUT_FORMATTER);
     }
 
     /**
@@ -66,7 +54,8 @@ public class Event extends Task {
      */
     @Override
     public String getDescription() {
-        return description + " (from: " + from + " to: " + to + ")";
+        // Using OUTPUT_FORMATTER for a more human-readable format.
+        return description + " (from: " + from.format(OUTPUT_FORMATTER) + " to: " + to.format(OUTPUT_FORMATTER) + ")";
     }
 
     /**

@@ -56,6 +56,7 @@ public class TaskList {
             throw new MimiException("Sorry! The task doesn't exist. Index out of bounds: " + task);
         }
         return tasks.remove(task - 1);
+
     }
 
     /**
