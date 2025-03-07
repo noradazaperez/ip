@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
     private String bar = "--------------------------------------------------";
 
-    public void showTasks(TaskList taskList) {
-        for (int i = 0; i < taskList.getTasks().size(); i++) {
-            System.out.println(i + ": " + taskList.getTasks().get(i).toString());
+    public void showTasks(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i+1) + ": " + tasks.get(i).toString());
         }
     }
 

@@ -72,6 +72,11 @@ public class Parser {
                     throw new MimiException("No description was entered.");
                 }
                 return new DeleteCommand(Integer.parseInt(description));
+            case "find":
+                if (parts.length == 1) {
+                    throw new MimiException("No description was entered.");
+                }
+                return new FindCommand(description);
 
             case "exit":
                 return new ExitCommand();
