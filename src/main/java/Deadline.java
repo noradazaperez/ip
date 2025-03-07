@@ -1,26 +1,41 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 
 /**
  * Represents a task with a deadline.
  * <p>
- * This class extends {@code Task} by adding a deadline, which is stored as a {@code String}.
- * The deadline typically indicates the due date for the task.
+ * This class extends {@code Task} by adding a deadline, which is stored as a {@code LocalDateTime}.
+ * The deadline indicates the due date and time for the task.
  * </p>
  */
 public class Deadline extends Task {
-    protected LocalDate deadline;
+    protected LocalDateTime deadline;
 
-    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    // Formatter that accepts either "yyyy-MM-dd" or "yyyy-MM-dd HH:mm"
+    private static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
+            .appendPattern("yyyy-MM-dd")
+            .optionalStart()
+            .appendLiteral(' ')
+            .appendPattern("HH:mm")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .toFormatter();
+
+    // Formatter for output with date and time
+    private static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+    // Formatter for output with date only
+    private static final DateTimeFormatter DATE_ONLY_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     public Deadline(String description, boolean isDone, String deadlineStr) throws MimiException {
         super(description, isDone);
         try {
-            this.deadline = LocalDate.parse(deadlineStr, INPUT_FORMATTER);
+            this.deadline = LocalDateTime.parse(deadlineStr, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new MimiException("Invalid date format. Please use yyyy-MM-dd.");
+            throw new MimiException("Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HH:mm.");
         }
     }
 
@@ -40,14 +55,20 @@ public class Deadline extends Task {
     @Override
     public String printFile() {
         String done = isDone ? "Y" : "N";
-        // Output using the input formatter so that the file retains the yyyy-MM-dd format
+        // Output using the input formatter so that the file retains the consistent date format
         return done + "|D|" + description + "|" + deadline.format(INPUT_FORMATTER);
     }
 
     @Override
     public String getDescription() {
-        // Output using the human-readable format
-        return this.description + " (by: " + deadline.format(OUTPUT_FORMATTER) + ")";
+        // Choose the formatter based on whether the time is the default (midnight)
+        String formattedDeadline;
+        if (deadline.getHour() == 0 && deadline.getMinute() == 0) {
+            formattedDeadline = deadline.format(DATE_ONLY_OUTPUT_FORMATTER);
+        } else {
+            formattedDeadline = deadline.format(DATE_TIME_OUTPUT_FORMATTER);
+        }
+        return this.description + " (by: " + formattedDeadline + ")";
     }
 
     @Override
@@ -55,3 +76,4 @@ public class Deadline extends Task {
         return "[D][" + getStatusIcon() + "] " + getDescription();
     }
 }
+
