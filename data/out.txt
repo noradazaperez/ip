@@ -1,5 +1,2 @@
-N|T|hola
-N|T|adios
-Y|D|hola|tuesday
-N|E|nora attend CS2113 lecture Friday 21 Feb 2025|4|6pm
-N|T|hola
+N|D|todo|2003-10-20
+N|D|todo no se que |2003-02-02

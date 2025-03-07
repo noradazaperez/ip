@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,17 +15,9 @@ public class Ui {
      */
     private String bar = "--------------------------------------------------";
 
-    /**
-     * Displays the list of tasks to the user.
-     * <p>
-     * Each task is printed on a new line with its corresponding index.
-     * </p>
-     *
-     * @param taskList the {@code TaskList} containing tasks to be displayed
-     */
-    public void showTasks(TaskList taskList) {
-        for (int i = 0; i < taskList.getTasks().size(); i++) {
-            System.out.println(i + ": " + taskList.getTasks().get(i).toString());
+    public void showTasks(ArrayList<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i+1) + ": " + tasks.get(i).toString());
         }
     }
 
