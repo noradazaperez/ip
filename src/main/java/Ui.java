@@ -10,9 +10,6 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    /**
-     * A separator line used to visually divide sections of output.
-     */
     private String bar = "--------------------------------------------------";
 
     /**

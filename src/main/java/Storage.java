@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles storage functions for the Mimi application.
+ * <p>
+ * This class is responsible for reading the information in the storage file, storing the
+ * information in files.
+ * </p>
+ */
 public class Storage {
     private File file;
     // constant values
@@ -13,6 +20,11 @@ public class Storage {
     private static final int DATE1 = 3;
     private static final int DATE2 = 4;
 
+    /**
+     * Constructs a new {@code Storage} with the specified file path
+     *
+     * @param filePath path of the file that has the information
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
     }

@@ -1,3 +1,7 @@
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+
 /**
  * Represents an abstract task with a description and a completion status.
  * <p>
@@ -9,6 +13,25 @@ public abstract class Task {
 
     protected String description;
     protected boolean isDone;
+
+    // Formatter that accepts either "yyyy-MM-dd" or "yyyy-MM-dd HH:mm"
+    protected static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
+            .appendPattern("dd-MM-yyyy")
+            .optionalStart()
+            .appendLiteral(' ')
+            .appendPattern("HH:mm")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .toFormatter();
+
+    // Formatter for output with date and time
+    protected static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER =
+            DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
+    // Formatter for output with date only
+    protected static final DateTimeFormatter DATE_ONLY_OUTPUT_FORMATTER =
+            DateTimeFormatter.ofPattern("dd MMM yyyy");
+
 
     /**
      * Constructs a new {@code Task} with the specified description and completion status.
@@ -36,9 +59,6 @@ public abstract class Task {
 
     /**
      * Returns the status icon of the task.
-     * <p>
-     * An "X" indicates the task is done, while a space indicates it is not done.
-     * </p>
      *
      * @return a string representing the task's status icon
      */
@@ -73,26 +93,10 @@ public abstract class Task {
      * Returns a string representation of the task formatted for file storage.
      * <p>
      * The format is: [done status]|T|[description]
-     * where "Y" indicates the task is done and "N" indicates it is not done.
      * </p>
      *
      * @return a formatted string suitable for saving in a file
      */
-    public String printFile() {
-        String done = isDone ? "Y" : "N";
-        return done + "|T|" + getDescription();
-    }
+    public abstract String printFile();
 
-    /**
-     * Returns a string representation of the task for display purposes.
-     * <p>
-     * The format is: [T][status icon] [description]
-     * </p>
-     *
-     * @return a formatted string representing the task
-     */
-    @Override
-    public String toString() {
-        return "[T][" + getStatusIcon() + "] " + getDescription();
-    }
 }

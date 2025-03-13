@@ -20,6 +20,10 @@ public class TaskList {
         this.tasks = tasks;
     }
 
+    /**
+     * Constructs an empty {@code TaskList}
+     *
+     */
     public TaskList() {
         this(new ArrayList<>());
     }
@@ -97,7 +101,7 @@ public class TaskList {
      *
      * @param keyword the keyword that needs to be in the description of the task
      * @return the list with the tasks
-     * @throws MimiException
+     * @throws MimiException if there isn't any task with that keyword
      */
     public ArrayList<Task> find(String keyword) throws MimiException {
         ArrayList<Task> taskKey = new ArrayList<>();

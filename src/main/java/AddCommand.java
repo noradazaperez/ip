@@ -1,7 +1,15 @@
+/**
+ * Represents the add task command that can be executed within the application.
+ */
 public class AddCommand implements Command {
 
     Task task;
 
+    /**
+     * Constructs a new {@code AddCommand} with the specified task object
+     *
+     * @param task the task object to be added
+     */
     public AddCommand(Task task) {
         this.task = task;
     }

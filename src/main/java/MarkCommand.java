@@ -1,6 +1,14 @@
+/**
+ * Represents the mark task command that can be executed in the application
+ */
 public class MarkCommand implements Command {
     private final int task;
 
+    /**
+     * Constructs a new {@code MarkCommand} with the specified task index
+     *
+     * @param task the index that needs to be marked
+     */
     public MarkCommand(int task) {
         this.task = task;
     }

@@ -11,14 +11,14 @@ public interface Command {
      * @param storage the storage mechanism for saving or retrieving data
      * @throws MimiException if an error occurs during the execution of the command
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException;
+    void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException;
 
     /**
      * Determines whether this command signals that the application should exit.
      *
      * @return {@code true} if the command is an exit command;
-     *         {@code false} otherwise
+     * {@code false} otherwise
      */
-    public boolean isExit();
+    boolean isExit();
 
 }

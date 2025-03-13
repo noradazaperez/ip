@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Represents the main application for the Mimi program.
@@ -15,11 +13,8 @@ public class Mimi {
     private Ui ui;
 
     /**
-     * Constructs a new instance of the Mimi application.
-     * <p>
-     * The constructor initializes the UI and storage, then attempts to load
-     * the task list from persistent storage. If loading fails, an empty task list is created.
-     * </p>
+     * Constructs a new instance of the Mimi application from a file.
+     * If loading fails, an empty task list is created.
      *
      * @param filePath the path to the file used for storing the application's data
      */

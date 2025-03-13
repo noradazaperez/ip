@@ -1,11 +1,6 @@
 /**
  * Provides a utility method for parsing user input into corresponding {@code Command} objects.
- * <p>
- * The {@code parse} method interprets the first word of the input as the command type and uses
- * the rest of the input as arguments or descriptions for that command. Depending on the command,
- * it returns an appropriate {@code Command} implementation. If the input is invalid or cannot be parsed,
- * a {@code MimiException} is thrown.
- * </p>
+ *
  */
 public class Parser {
 
@@ -56,6 +51,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Create a mark command
+     *
+     * @param arguments         argument entered by the user to mark command
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the index is not correct
+     */
     private static Command createMarkCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter an index.");
@@ -68,6 +70,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Create a unmark command
+     *
+     * @param arguments         argument entered by the user to unmark command
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the index is not correct
+     */
     private static Command createUnmarkCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter an index.");
@@ -80,6 +89,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Create a todo command
+     *
+     * @param arguments         argument entered by the user with the description
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the description was not entered
+     */
     private static Command createTodoCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter a description.");
@@ -87,6 +103,13 @@ public class Parser {
         return new AddCommand(new ToDo(arguments));
     }
 
+    /**
+     * Create a deadline command
+     *
+     * @param arguments         argument entered by the user with the description
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the description was not entered
+     */
     private static Command createDeadlineCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter a deadline.");
@@ -103,6 +126,13 @@ public class Parser {
         return new AddCommand(deadline);
     }
 
+    /**
+     * Create an event command
+     *
+     * @param arguments         argument entered by the user with the description
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the description was not entered
+     */
     private static Command createEventCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter a description.");
@@ -121,6 +151,13 @@ public class Parser {
         return new AddCommand(event);
     }
 
+    /**
+     * Create a delete command
+     *
+     * @param arguments         argument entered by the user with the index
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the index is not correct
+     */
     private static Command createDeleteCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter an index.");
@@ -133,6 +170,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Create a find command
+     *
+     * @param arguments         argument entered by the user with the keyword
+     * @return                  the {@code Command} object
+     * @throws MimiException    if the keyword is not correct
+     */
     private static Command createFindCommand(String arguments) throws MimiException {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter a keyword.");
