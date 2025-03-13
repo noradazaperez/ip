@@ -66,7 +66,6 @@ public class Event extends Task {
 
     /**
      * Returns a string representation of the event's description including its start and end times.
-     * Uses a human-friendly format that conditionally includes the time.
      *
      * @return a string in the format "[description] (from: [from] to: [to])"
      */

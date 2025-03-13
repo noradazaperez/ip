@@ -11,6 +11,12 @@ public class Storage {
         this.file = new File(filePath);
     }
 
+    // constant values
+    private static final int DONE = 0;
+    private static final int TYPE = 1;
+    private static final int DESCRIPTION = 2;
+    private static final int DATE1 = 3;
+    private static final int DATE2 = 4;
     /**
      * It loads the information of the given file and returns a list of tasks
      *
@@ -19,6 +25,8 @@ public class Storage {
      */
     public ArrayList<Task> load() throws MimiException {
         ArrayList<Task> tasks = new ArrayList<>();
+        Task task;
+
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
@@ -28,39 +36,34 @@ public class Storage {
                     continue;
                 }
 
-                // Split by '|' (pipe)
+                // Split by '|'
                 String[] parts = line.split("\\|");
 
-                // Basic validation
                 if (parts.length < 3) {
                     throw new MimiException("Oh no... There is a PROBLEMA with the file");
                 }
 
                 // Convert "Y"/"N" to boolean
-                boolean done = parts[0].trim().equalsIgnoreCase("Y");
-
+                boolean done = parts[DONE].trim().equalsIgnoreCase("Y");
                 // The third field is always the description
-                String description = parts[2].trim();
-                Task task;
-
+                String description = parts[DESCRIPTION].trim();
                 // The second field is the type (T/D/E)
-                String type = parts[1].trim();
+                String type = parts[TYPE].trim();
+
                 if (type.equalsIgnoreCase("T")) {
                     task = new Task(description, done);
                 } else if (type.equalsIgnoreCase("D")) {
-                    // Validation
                     if (parts.length < 4) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
-                    task = new Deadline(description, done, parts[3].trim());
+                    task = new Deadline(description, done, parts[DATE1].trim());
                 } else if (type.equalsIgnoreCase("E")) {
-                    // Validation
                     if (parts.length < 5) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
-                    task = new Event(description, done, parts[3].trim(), parts[4].trim());
+                    task = new Event(description, done, parts[DATE1].trim(), parts[DATE2].trim());
                 } else {
-                    // ERROR
+                    // if the type is not defined
                     throw new MimiException("Oh no... There is a PROBLEMA with the file");
                 }
 

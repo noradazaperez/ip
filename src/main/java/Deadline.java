@@ -55,13 +55,13 @@ public class Deadline extends Task {
     @Override
     public String printFile() {
         String done = isDone ? "Y" : "N";
-        // Output using the input formatter so that the file retains the consistent date format
+        // Output using the input formatter
         return done + "|D|" + description + "|" + deadline.format(INPUT_FORMATTER);
     }
 
     @Override
     public String getDescription() {
-        // Choose the formatter based on whether the time is the default (midnight)
+        // Choose the formatter based on whether the time with hour or not
         String formattedDeadline;
         if (deadline.getHour() == 0 && deadline.getMinute() == 0) {
             formattedDeadline = deadline.format(DATE_ONLY_OUTPUT_FORMATTER);

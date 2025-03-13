@@ -15,6 +15,11 @@ public class Ui {
      */
     private String bar = "--------------------------------------------------";
 
+    /**
+     * Prints the tasks
+     *
+     * @param tasks tasks to be printed
+     */
     public void showTasks(ArrayList<Task> tasks) {
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i+1) + ": " + tasks.get(i).toString());
@@ -52,9 +57,6 @@ public class Ui {
 
     /**
      * Displays a separator line to the console.
-     * <p>
-     * This helps to visually separate different sections of output.
-     * </p>
      */
     public void showLine() {
         System.out.println(bar);
@@ -67,7 +69,6 @@ public class Ui {
      */
     public void showError(String error) {
         System.out.println(error);
-        // TODO: Consider enhancing error display (e.g., logging or formatting)
     }
 
     /**

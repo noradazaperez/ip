@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -10,19 +9,9 @@ import java.util.Scanner;
  * </p>
  */
 public class Mimi {
-    /**
-     * Handles loading and saving the application's persistent data.
-     */
+
     private Storage storage;
-
-    /**
-     * Maintains the list of tasks for the application.
-     */
     private TaskList taskList;
-
-    /**
-     * Manages interactions with the user.
-     */
     private Ui ui;
 
     /**
@@ -47,10 +36,6 @@ public class Mimi {
 
     /**
      * Runs the Mimi application.
-     * <p>
-     * This method greets the user and enters a command loop where it reads input, parses commands,
-     * executes them, and displays results until an exit command is received.
-     * </p>
      */
     public void run() {
         ui.greet();
@@ -65,8 +50,8 @@ public class Mimi {
                 ui.showLine();
                 isExit = c.isExit();
             } catch (MimiException me) {
-                // handle invalid input
                 ui.showError(me.toString());
+                ui.showLine();
             }
         }
     }
