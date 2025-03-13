@@ -8,8 +8,12 @@
  * </p>
  */
 public class Parser {
-    private static final int COMMAND = 0;
-    private static final int ARG = 1;
+
+    // Constants for command markers
+    private static final String DEADLINE_DELIMITER = "/by";
+    private static final String EVENT_FROM_DELIMITER = "/from";
+    private static final String EVENT_TO_DELIMITER = "/to";
+
     /**
      * Parses the user input string and returns the corresponding {@code Command} object.
      *
@@ -19,89 +23,118 @@ public class Parser {
      *                       or if the input cannot be parsed correctly
      */
     public static Command parse(String input) throws MimiException {
-
-        String[] parts = input.split(" ", 2);
-
-        if (parts.length == 0 || parts[COMMAND].isEmpty()) {
-            throw new MimiException("No command was entered.");
+        if (input == null || input.trim().isEmpty()) {
+            throw new MimiException("Lo siento!! You did not enter a valid command.");
         }
-        String command = parts[COMMAND].toLowerCase();
-        String description = parts.length > 1 ? parts[ARG].trim() : "";
+
+        // Split into command and argument(s)
+        String[] parts = input.split(" ", 2);
+        String command = parts[0].toLowerCase();
+        String arguments = parts.length > 1 ? parts[1].trim() : "";
 
         switch (command) {
         case "list":
             return new ShowListCommand();
-
         case "mark":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the description.");
-            }
-            try {
-                return new MarkCommand(Integer.parseInt(description));
-            } catch (NumberFormatException e) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the index number.");
-            }
-
+            return createMarkCommand(arguments);
         case "unmark":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the description");
-            }
-            try {
-                return new UnmarkCommand(Integer.parseInt(description));
-            } catch (NumberFormatException e) {
-                throw new MimiException("Oh no.. There is  a PROBLEMA with the index number.");
-            }
-
+            return createUnmarkCommand(arguments);
         case "todo":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the description");
-            }
-            return new AddCommand(new Task(description));
-
+            return createTodoCommand(arguments);
         case "deadline":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the description");
-            }
-            int index = description.indexOf("/by");
-            // TODO: Handle the case where "/by" is not present in the description.
-            Deadline deadline = new Deadline(description.substring(0, index).trim(),
-                    description.substring(index + 4).trim());
-            return new AddCommand(deadline);
-
+            return createDeadlineCommand(arguments);
         case "event":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("Oh no... There is a PROBLEMA with the description.");
-            }
-            int indexFrom = description.indexOf("/from");
-            int indexTo = description.indexOf("/to");
-            Event event = new Event(description.substring(0, indexFrom).trim(),
-                    description.substring(indexFrom + 6, indexTo).trim(),
-                    description.substring(indexTo + 4).trim());
-            return new AddCommand(event);
-
+            return createEventCommand(arguments);
         case "delete":
-            // Ensure description exists
-            if (parts.length == 1) {
-                throw new MimiException("No description was entered.");
-            }
-            return new DeleteCommand(Integer.parseInt(description));
-
+            return createDeleteCommand(arguments);
         case "find":
-            if (parts.length == 1) {
-                throw new MimiException("No description was entered.");
-            }
-            return new FindCommand(description);
-
+            return createFindCommand(arguments);
         case "exit":
             return new ExitCommand();
-
         default:
             throw new MimiException("Perdona?? I think I don't know the command: " + command);
+        }
     }
+
+    private static Command createMarkCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter an index.");
+        }
+        try {
+            int index = Integer.parseInt(arguments);
+            return new MarkCommand(index);
+        } catch (NumberFormatException e) {
+            throw new MimiException("Lo siento! You did not enter a valid index: " + arguments);
+        }
+    }
+
+    private static Command createUnmarkCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter an index.");
+        }
+        try {
+            int index = Integer.parseInt(arguments);
+            return new UnmarkCommand(index);
+        } catch (NumberFormatException e) {
+            throw new MimiException("Lo siento! You did not enter a valid index: " + arguments);
+        }
+    }
+
+    private static Command createTodoCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter a description.");
+        }
+        return new AddCommand(new Task(arguments));
+    }
+
+    private static Command createDeadlineCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter a deadline.");
+        }
+        int byIndex = arguments.indexOf(DEADLINE_DELIMITER);
+        if (byIndex == -1) {
+            throw new MimiException("Lo siento! deadline command must include '" + DEADLINE_DELIMITER + "' followed by the deadline time.");
+        }
+        String taskDescription = arguments.substring(0, byIndex).trim();
+        String deadlineTime = arguments.substring(byIndex + DEADLINE_DELIMITER.length()).trim();
+
+        Deadline deadline = new Deadline(taskDescription, deadlineTime);
+        return new AddCommand(deadline);
+    }
+
+    private static Command createEventCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter a description.");
+        }
+        int fromIndex = arguments.indexOf(EVENT_FROM_DELIMITER);
+        int toIndex = arguments.indexOf(EVENT_TO_DELIMITER);
+        if (fromIndex == -1 || toIndex == -1) {
+            throw new MimiException("Lo siento! event command must include '" + EVENT_FROM_DELIMITER + "' and '" + EVENT_TO_DELIMITER + "' with valid positions.");
+        }
+        String taskDescription = arguments.substring(0, fromIndex).trim();
+        String fromTime = arguments.substring(fromIndex + EVENT_FROM_DELIMITER.length(), toIndex).trim();
+        String toTime = arguments.substring(toIndex + EVENT_TO_DELIMITER.length()).trim();
+
+        Event event = new Event(taskDescription, fromTime, toTime);
+        return new AddCommand(event);
+    }
+
+    private static Command createDeleteCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter an index.");
+        }
+        try {
+            int index = Integer.parseInt(arguments);
+            return new DeleteCommand(index);
+        } catch (NumberFormatException e) {
+            throw new MimiException("Lo siento! You did not enter a valid index: " + arguments);
+        }
+    }
+
+    private static Command createFindCommand(String arguments) throws MimiException {
+        if (arguments.isEmpty()) {
+            throw new MimiException("Lo siento! You did not enter a keyword.");
+        }
+        return new FindCommand(arguments);
     }
 }
