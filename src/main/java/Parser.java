@@ -93,7 +93,8 @@ public class Parser {
         }
         int byIndex = arguments.indexOf(DEADLINE_DELIMITER);
         if (byIndex == -1) {
-            throw new MimiException("Lo siento! deadline command must include '" + DEADLINE_DELIMITER + "' followed by the deadline time.");
+            throw new MimiException("Lo siento! deadline command must include '" +
+                    DEADLINE_DELIMITER + "' followed by the deadline time.");
         }
         String taskDescription = arguments.substring(0, byIndex).trim();
         String deadlineTime = arguments.substring(byIndex + DEADLINE_DELIMITER.length()).trim();
@@ -109,7 +110,8 @@ public class Parser {
         int fromIndex = arguments.indexOf(EVENT_FROM_DELIMITER);
         int toIndex = arguments.indexOf(EVENT_TO_DELIMITER);
         if (fromIndex == -1 || toIndex == -1) {
-            throw new MimiException("Lo siento! event command must include '" + EVENT_FROM_DELIMITER + "' and '" + EVENT_TO_DELIMITER + "' with valid positions.");
+            throw new MimiException("Lo siento! event command must include '" +
+                    EVENT_FROM_DELIMITER + "' and '" + EVENT_TO_DELIMITER + "' with valid positions.");
         }
         String taskDescription = arguments.substring(0, fromIndex).trim();
         String fromTime = arguments.substring(fromIndex + EVENT_FROM_DELIMITER.length(), toIndex).trim();

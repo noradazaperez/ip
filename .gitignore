@@ -42,7 +42,7 @@ release.properties
 build/
 
 # data
-data/out.txt
+data/
 
 # Other temporary files
 *.swp

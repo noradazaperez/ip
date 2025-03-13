@@ -48,20 +48,23 @@ public class Storage {
                 String description = parts[DESCRIPTION].trim();
                 String type = parts[TYPE].trim();
 
-                if (type.equalsIgnoreCase("T")) {
+                switch (type.toUpperCase()) {
+                case "T":
                     task = new ToDo(description, done);
-                } else if (type.equalsIgnoreCase("D")) {
+                    break;
+                case "D":
                     if (parts.length < 4) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
                     task = new Deadline(description, done, parts[DATE1].trim());
-                } else if (type.equalsIgnoreCase("E")) {
+                    break;
+                case "E":
                     if (parts.length < 5) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");
                     }
                     task = new Event(description, done, parts[DATE1].trim(), parts[DATE2].trim());
-                } else {
-                    // if the type is not defined
+                    break;
+                default:
                     throw new MimiException("Oh no... There is a PROBLEMA with the file");
                 }
 

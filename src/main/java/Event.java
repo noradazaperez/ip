@@ -10,7 +10,7 @@ public class Event extends ToDo {
 
     // Create a formatter that accepts either "yyyy-MM-dd" or "yyyy-MM-dd HH:mm"
     private static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd")
+            .appendPattern("dd-MM-yyyy")
             .optionalStart()
             .appendLiteral(' ')
             .appendPattern("HH:mm")
@@ -20,9 +20,9 @@ public class Event extends ToDo {
             .toFormatter();
 
     // Output formatter when time is provided
-    private static final DateTimeFormatter OUTPUT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+    private static final DateTimeFormatter OUTPUT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
     // Output formatter when only date is provided (or time is default midnight)
-    private static final DateTimeFormatter OUTPUT_DATE_ONLY_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final DateTimeFormatter OUTPUT_DATE_ONLY_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
     /**
      * Constructs a new {@code Event} with the specified description, start time, and end time.
@@ -40,7 +40,7 @@ public class Event extends ToDo {
             this.from = LocalDateTime.parse(fromStr, INPUT_FORMATTER);
             this.to = LocalDateTime.parse(toStr, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new MimiException("Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HH:mm.");
+            throw new MimiException("Invalid date format. Please use dd MM yyyy or dd MM yyyy HH:mm.");
         }
     }
 

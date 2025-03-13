@@ -16,7 +16,7 @@ public class Deadline extends ToDo {
 
     // Formatter that accepts either "yyyy-MM-dd" or "yyyy-MM-dd HH:mm"
     private static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM-dd")
+            .appendPattern("dd-MM-yyyy")
             .optionalStart()
             .appendLiteral(' ')
             .appendPattern("HH:mm")
@@ -26,16 +26,16 @@ public class Deadline extends ToDo {
             .toFormatter();
 
     // Formatter for output with date and time
-    private static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
+    private static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
     // Formatter for output with date only
-    private static final DateTimeFormatter DATE_ONLY_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final DateTimeFormatter DATE_ONLY_OUTPUT_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
     public Deadline(String description, boolean isDone, String deadlineStr) throws MimiException {
         super(description, isDone);
         try {
             this.deadline = LocalDateTime.parse(deadlineStr, INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new MimiException("Invalid date format. Please use yyyy-MM-dd or yyyy-MM-dd HH:mm.");
+            throw new MimiException("Invalid date format. Please use dd-MM-yyyy or dd MM-yyyy HH:mm.");
         }
     }
 

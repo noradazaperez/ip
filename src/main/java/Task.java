@@ -16,7 +16,10 @@ public abstract class Task {
      * @param description the description of the task
      * @param isDone      {@code true} if the task is completed, {@code false} otherwise
      */
-    public Task(String description, boolean isDone) {
+    public Task(String description, boolean isDone) throws MimiException{
+        if (description.isEmpty()) {
+            throw new MimiException("Lo siento! You ned to write a description.");
+        }
         this.description = description;
         this.isDone = isDone;
     }
@@ -27,7 +30,7 @@ public abstract class Task {
      *
      * @param description the description of the task
      */
-    public Task(String description) {
+    public Task(String description) throws MimiException {
         this(description, false);
     }
 
