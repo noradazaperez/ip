@@ -1,0 +1,17 @@
+/**
+ * Public task that inherits from Task.
+ *  <p>
+ *  This class provides basic functionality for a ToDo task.
+ *  </p>
+ *
+ */
+
+public class ToDo extends Task {
+    public ToDo(String description, boolean isDone) {
+        super(description, isDone);
+    }
+
+    public ToDo(String description) {
+        super(description);
+    }
+}

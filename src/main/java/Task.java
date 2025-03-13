@@ -1,20 +1,13 @@
 /**
- * Represents a generic task with a description and a completion status.
+ * Represents an abstract task with a description and a completion status.
  * <p>
  * This class provides basic functionality for marking a task as done or not done,
  * retrieving its status, and generating string representations for both display and file storage.
  * </p>
  */
-public class Task {
+public abstract class Task {
 
-    /**
-     * The description of the task.
-     */
     protected String description;
-
-    /**
-     * Indicates whether the task has been completed.
-     */
     protected boolean isDone;
 
     /**

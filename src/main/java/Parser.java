@@ -84,7 +84,7 @@ public class Parser {
         if (arguments.isEmpty()) {
             throw new MimiException("Lo siento! You did not enter a description.");
         }
-        return new AddCommand(new Task(arguments));
+        return new AddCommand(new ToDo(arguments));
     }
 
     private static Command createDeadlineCommand(String arguments) throws MimiException {

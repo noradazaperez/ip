@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 
-public class Event extends Task {
+public class Event extends ToDo {
     protected LocalDateTime from;
     protected LocalDateTime to;
 

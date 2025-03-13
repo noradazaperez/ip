@@ -49,7 +49,7 @@ public class Storage {
                 String type = parts[TYPE].trim();
 
                 if (type.equalsIgnoreCase("T")) {
-                    task = new Task(description, done);
+                    task = new ToDo(description, done);
                 } else if (type.equalsIgnoreCase("D")) {
                     if (parts.length < 4) {
                         throw new MimiException("Oh no... There is a PROBLEMA with the file");

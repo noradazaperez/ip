@@ -11,7 +11,7 @@ import java.time.temporal.ChronoField;
  * The deadline indicates the due date and time for the task.
  * </p>
  */
-public class Deadline extends Task {
+public class Deadline extends ToDo {
     protected LocalDateTime deadline;
 
     // Formatter that accepts either "yyyy-MM-dd" or "yyyy-MM-dd HH:mm"

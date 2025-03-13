@@ -7,8 +7,8 @@ public class DeleteCommand implements Command {
     }
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
-        tasks.delete(task);
-        ui.showCommand("I have deleted the task " + tasks.getTask(task));
+        Task deletedTask = tasks.delete(task);
+        ui.showCommand("I have deleted the task " + deletedTask);
     }
 
     @Override
