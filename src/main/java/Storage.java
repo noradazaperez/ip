@@ -6,17 +6,17 @@ import java.util.Scanner;
 
 public class Storage {
     private File file;
-
-    public Storage(String filePath) {
-        this.file = new File(filePath);
-    }
-
     // constant values
     private static final int DONE = 0;
     private static final int TYPE = 1;
     private static final int DESCRIPTION = 2;
     private static final int DATE1 = 3;
     private static final int DATE2 = 4;
+
+    public Storage(String filePath) {
+        this.file = new File(filePath);
+    }
+
     /**
      * It loads the information of the given file and returns a list of tasks
      *
@@ -40,14 +40,12 @@ public class Storage {
                 String[] parts = line.split("\\|");
 
                 if (parts.length < 3) {
-                    throw new MimiException("Oh no... There is a PROBLEMA with the file");
+                    throw new MimiException("Oh no... The file doesn't have the correct format. ");
                 }
 
-                // Convert "Y"/"N" to boolean
+                // extract the information
                 boolean done = parts[DONE].trim().equalsIgnoreCase("Y");
-                // The third field is always the description
                 String description = parts[DESCRIPTION].trim();
-                // The second field is the type (T/D/E)
                 String type = parts[TYPE].trim();
 
                 if (type.equalsIgnoreCase("T")) {

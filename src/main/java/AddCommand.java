@@ -7,8 +7,9 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
         tasks.add(task);
+        ui.showCommand("I just added the task " + tasks.getTask(tasks.getSize()));
     }
 
     @Override
@@ -16,8 +17,4 @@ public class AddCommand implements Command {
         return false;
     }
 
-    @Override
-    public String getCommand() {
-        return "I just added the task" + task.toString();
-    }
 }

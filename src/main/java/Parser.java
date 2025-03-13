@@ -22,7 +22,6 @@ public class Parser {
 
         String[] parts = input.split(" ", 2);
 
-        // parts[0] is the command.
         if (parts.length == 0 || parts[COMMAND].isEmpty()) {
             throw new MimiException("No command was entered.");
         }

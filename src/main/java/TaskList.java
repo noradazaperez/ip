@@ -34,6 +34,15 @@ public class TaskList {
     }
 
     /**
+     * Returns the size of the list
+     *
+     * @return the size of thee {@code ArrayList} of the tasks
+     */
+    public int getSize() {
+        return tasks.size();
+    }
+
+    /**
      * Deletes the task at the specified index.
      *
      * @param task the index of the task to be deleted
@@ -41,7 +50,7 @@ public class TaskList {
      * @throws MimiException if the index is out of bounds
      */
     public Task delete(int task) throws MimiException {
-        if (task > tasks.size() || task < 0) {
+        if (task > tasks.size() || task < 1) {
             throw new MimiException("Lo siento! The task doesn't exist. Index out of bounds: " + task);
         }
         return tasks.remove(task - 1);
@@ -64,10 +73,10 @@ public class TaskList {
      * @throws MimiException if the index is out of bounds
      */
     public void mark(int task) throws MimiException {
-        if (task > tasks.size() || task < 0) {
+        if (task > tasks.size() || task < 1) {
             throw new MimiException("Lo siento! The task doesn't exist. Index out of bounds: " + task);
         }
-        tasks.get(task-1).markAsDone();
+        tasks.get(task - 1).markAsDone();
     }
 
     /**
@@ -77,10 +86,10 @@ public class TaskList {
      * @throws MimiException if the index is out of bounds
      */
     public void unmark(int task) throws MimiException {
-        if (task > tasks.size() || task < 0) {
+        if (task > tasks.size() || task < 1) {
             throw new MimiException("Lo siento! The task doesn't exist. Index out of bounds: " + task);
         }
-        tasks.get(task-1).markAsNotDone();
+        tasks.get(task - 1).markAsNotDone();
     }
 
     /**
@@ -104,7 +113,18 @@ public class TaskList {
         return taskKey;
     }
 
-
-
+    /**
+     * Get task in the given index (index starting from 1)
+     *
+     * @param task  index of the task
+     * @return      task object in the given index
+     * @throws MimiException    if the index is not correct.
+     */
+    public Task getTask(int task) throws MimiException {
+        if (task > tasks.size() || task < 1) {
+            throw new MimiException("Lo siento! The the task doesn't exist. Index out of bounds: " + task);
+        }
+        return tasks.get(task - 1);
+    }
 
 }

@@ -46,7 +46,6 @@ public class Mimi {
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(taskList, ui, storage);
-                ui.showCommand(c);
                 ui.showLine();
                 isExit = c.isExit();
             } catch (MimiException me) {

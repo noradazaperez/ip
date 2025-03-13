@@ -8,6 +8,7 @@ public class MarkCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
         tasks.mark(task);
+        ui.showCommand("I just marked the task " + tasks.getTask(task));
     }
 
     @Override
@@ -15,8 +16,4 @@ public class MarkCommand implements Command {
         return false;
     }
 
-    @Override
-    public String getCommand() {
-        return "I just marked the task " + task;
-    }
 }

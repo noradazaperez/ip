@@ -9,8 +9,4 @@ public class ShowListCommand implements Command {
         return false;
     }
 
-    @Override
-    public String getCommand() {
-        return "";
-    }
 }

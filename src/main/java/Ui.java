@@ -62,6 +62,7 @@ public class Ui {
         System.out.println(bar);
     }
 
+
     /**
      * Displays an error message to the user.
      *
@@ -74,9 +75,9 @@ public class Ui {
     /**
      * Displays the output message corresponding to a command.
      *
-     * @param command the {@code Command} whose output message is to be shown
+     * @param command the output message is to be shown for the command
      */
-    public void showCommand(Command command){
-        System.out.println(command.getCommand());
+    public void showCommand(String command){
+        System.out.println(command);
     }
 }

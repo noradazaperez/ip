@@ -1,11 +1,5 @@
 /**
  * Represents a command that can be executed within the application.
- * <p>
- * Implementations of this interface encapsulate a specific action to be performed,
- * </p>
- * <p>
- * Example commands might include adding a task, deleting a task, or marking a task as completed.
- * </p>
  */
 public interface Command {
 
@@ -22,15 +16,9 @@ public interface Command {
     /**
      * Determines whether this command signals that the application should exit.
      *
-     * @return {@code true} if the command should cause the application to terminate;
+     * @return {@code true} if the command is an exit command;
      *         {@code false} otherwise
      */
     public boolean isExit();
 
-    /**
-     * Retrieves a string representation of this command.
-     *
-     * @return a string that describes this command, useful for logging or debugging
-     */
-    public String getCommand();
 }

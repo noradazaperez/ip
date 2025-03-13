@@ -9,6 +9,7 @@ public class UnmarkCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws MimiException {
         tasks.unmark(task);
+        ui.showCommand("I have just unmarked " + tasks.getTask(task));
     }
 
     @Override
@@ -16,8 +17,4 @@ public class UnmarkCommand implements Command {
         return false;
     }
 
-    @Override
-    public String getCommand() {
-        return "I just unmarked " + task;
-    }
 }

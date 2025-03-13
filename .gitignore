@@ -41,5 +41,8 @@ release.properties
 .gradle/
 build/
 
+# data
+data/out.txt
+
 # Other temporary files
 *.swp
