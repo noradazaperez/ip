@@ -56,7 +56,7 @@ public class Mimi {
      * @param args command-line arguments (not used in this application)
      */
     public static void main(String[] args) {
-        new Mimi("data/out.txt").run();
+        new Mimi("out.txt").run();
     }
 
 
